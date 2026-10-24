@@ -1,36 +1,23 @@
+import 'package:zapcontrol/models/producto_color.dart';
+
 class Producto {
 
-  int idProducto;
-  String marca;
-  String modelo;
-  String imagen;
-  String sku;
-  String talla;
-  String color;
+  final int idProducto;
+  final String marca;
+  final String modelo;
+  final String sku;
   double precio;
-  int stock;
-  String ubicacion;
-  String categoria;
-  List<Map<String, dynamic>> tallas;
-  
-  
+  final String categoria;
 
-  Producto ({
+  final List<ProductoColor> colores;
+
+  Producto({
     required this.idProducto,
     required this.marca,
     required this.modelo,
-    required this.imagen,
     required this.sku,
-    required this.talla,
-    required this.color,
     required this.precio,
-    required this.stock,
-    required this.ubicacion,
     required this.categoria,
-    required this.tallas
+    required this.colores,
   });
-
-  int get stockTotal {
-    return tallas.fold(0, (sum, item) => sum + (item['stock'] as int));
-  }
 }

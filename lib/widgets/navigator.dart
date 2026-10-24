@@ -1,4 +1,9 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
+import 'package:zapcontrol/screens/pantalla_de_inicio.dart';
+import 'package:zapcontrol/screens/pantalla_lista_usuario.dart';
+import 'package:zapcontrol/screens/pantalla_mas_opciones.dart';
+import 'package:zapcontrol/screens/productos_screen.dart';
+import 'package:zapcontrol/screens/venta_screen.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -7,10 +12,20 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
+
+  final List<Widget> _paguinas = [
+    const PantallaInicio(),
+    const ProductosScreen(),
+    const VentaScreen(),
+    const PantallaMasOpciones(),
+    const PantallaListaUsuario(),
+  ];
+  
   int currentPageIndex = 1;
   
   @override
   Widget build(BuildContext context) {
+    
     return NavigationBar(
       onDestinationSelected: (int index) {
         setState(() {
@@ -54,4 +69,4 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       ],
     );
   }
-}
+}*/

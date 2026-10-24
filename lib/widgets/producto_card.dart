@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:zapcontrol/core/style_colors.dart';
-import 'package:zapcontrol/data/productos.dart';
+import 'package:zapcontrol/data/productos_data.dart';
 import 'package:zapcontrol/models/producto.dart';
+import 'package:zapcontrol/models/producto_color.dart';
 import 'package:zapcontrol/screens/detalle_producto_screen.dart';
 
 class ProductoCard extends StatefulWidget{
 
   final Producto producto;
+  final ProductoColor productoColor;
 
-  const ProductoCard({super.key, required this.producto});
+  const ProductoCard({
+    super.key, 
+    required this.producto,
+    required this.productoColor,
+  });
 
   @override
   State<ProductoCard> createState() => _ProductoCardState();
 }
 
 class _ProductoCardState extends State<ProductoCard> {
-  bool favorito = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,10 @@ class _ProductoCardState extends State<ProductoCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetalleProductoScreen(producto: widget.producto),
+            builder: (context) => DetalleProductoScreen(
+              producto: widget.producto,
+              productoColor: widget.productoColor,
+            ),
           ),
         );
       },
@@ -47,7 +55,7 @@ class _ProductoCardState extends State<ProductoCard> {
                 color: StyleColors.fondo,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Image.asset("assets/images/${widget.producto.imagen}"),
+              child: Image.asset("assets/images/${widget.productoColor.imagen}"),
               
             ),
             const SizedBox(width: 12),
@@ -61,20 +69,8 @@ class _ProductoCardState extends State<ProductoCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.producto.marca, 
+                        "${widget.producto.marca} ${widget.productoColor.color}",
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            favorito = !favorito; 
-                          });
-                        }, 
-                        icon: Icon(
-                          favorito ? Icons.favorite : Icons.favorite_border, 
-                          color: favorito ? Colors.red : Colors.grey, // Cambia a rojo si es favorito
-                          size: 20,
-                        ),
                       ),
                     ],
                   ),
@@ -111,7 +107,7 @@ class _ProductoCardState extends State<ProductoCard> {
                       ],
                   ),
                   const SizedBox(width: 12),
-                  Text("Stock: ${widget.producto.stockTotal}", 
+                  Text("Stock: ${widget.productoColor.stockTotal}", 
                     style: const TextStyle(color: Colors.green, fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                 ],

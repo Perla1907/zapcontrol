@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:zapcontrol/core/style_colors.dart';
-import 'package:zapcontrol/data/productos.dart';
-import 'package:zapcontrol/widgets/navigator.dart';
+import 'package:zapcontrol/data/carrito_data.dart';
+import 'package:zapcontrol/data/productos_data.dart';
+import 'package:zapcontrol/models/producto.dart';
+import 'package:zapcontrol/models/producto_color.dart';
+import 'package:zapcontrol/models/usuarios.dart';
+import 'package:zapcontrol/screens/pantalla_nuevo_producto.dart';
+import 'package:zapcontrol/screens/venta_screen.dart';
+import 'package:zapcontrol/services/servicio_auth.dart';
 import 'package:zapcontrol/widgets/producto_card.dart';
 
 class ProductosScreen extends StatefulWidget {
-  const ProductosScreen({super.key});
+  const ProductosScreen({
+    super.key,
+  });
 
   @override
   State<ProductosScreen> createState() => _ProductosScreenState();
@@ -13,8 +21,32 @@ class ProductosScreen extends StatefulWidget {
 
 class _ProductosScreenState extends State<ProductosScreen> {
 
+  final bool esAdministrador = ServicioAuth.usuarioActual?.rol == "Administrador";
+
+  String _categoriaSeleccionada = "Todos";
+
+  final List<String> _categorias = ["Todos", "Deportivo", "Casual", "Escolar"];
+  String _busqueda = '';
+
   @override
   Widget build(BuildContext context) {
+    
+    // 1. Expande los productos por sus colores
+    final productosExpandidos = productos.expand((producto) {
+      return producto.colores.map((colorObj) => {
+        'producto': producto,
+        'colorObj': colorObj,
+      });
+    });
+
+    // 2. Filtra la lista expandida
+    final productosFiltrados = productosExpandidos.where((item) {
+      final producto = item['producto'] as Producto;
+      final bool coincideNombre = producto.marca.toLowerCase().contains(_busqueda.toLowerCase());
+      final bool coincideCategoria = _categoriaSeleccionada == 'Todos' || producto.categoria == _categoriaSeleccionada;
+      return coincideNombre && coincideCategoria;
+    }).toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,10 +58,57 @@ class _ProductosScreenState extends State<ProductosScreen> {
           icon: const Icon(Icons.arrow_back_ios_outlined),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-          ),
+          if (esAdministrador)
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PantallaNuevoProducto(),
+                  ),
+                );
+              },
+            ),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VentaScreen(),
+                    ),
+                  );
+                }, 
+                icon: const Icon(Icons.shopping_cart_outlined), 
+                iconSize: 35,
+              ),
+              Positioned(
+                bottom: 30, 
+                left: 23,  
+                child: Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade400,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "${CarritoData.carrito.length}", 
+                      style: const TextStyle(
+                        color: Colors.white, 
+                        fontSize: 10, 
+                        fontWeight: FontWeight.bold,
+                      ), 
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ), 
+              ),
+            ],
+          )
         ],
       ),
       body: Padding(
@@ -49,6 +128,11 @@ class _ProductosScreenState extends State<ProductosScreen> {
                   borderSide: BorderSide.none,
                 ),
               ),
+              onChanged: (valor) {
+                setState(() {
+                  _busqueda = valor;
+                });
+              },
             ),
 
             const SizedBox(height: 16),
@@ -57,65 +141,57 @@ class _ProductosScreenState extends State<ProductosScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: StyleColors.resaltado,
-                      foregroundColor: Colors.white,
+                children: _categorias.map((cat) {
+                  // Evaluamos si este botón en particular es el seleccionado
+                  final bool esSeleccionado = _categoriaSeleccionada == cat;
+
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          // Al presionar, este botón pasa a ser el activo
+                          _categoriaSeleccionada = cat;
+                        });
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: esSeleccionado ? StyleColors.resaltado : StyleColors.fondo,
+                        foregroundColor: esSeleccionado ? Colors.white : Colors.black87,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20), 
+                        ),
+                      ),
+                      child: Text(cat),
                     ),
-                    child: const Text("Todos"),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: StyleColors.fondo,
-                      foregroundColor: Colors.black87,
-                      elevation: 0,
-                    ),
-                    child: const Text("Deportivos"),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: StyleColors.fondo,
-                      foregroundColor: Colors.black87,
-                      elevation: 0,
-                    ),
-                    child: const Text("Casuales"),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: StyleColors.fondo,
-                      foregroundColor: Colors.black87,
-                      elevation: 0,
-                    ),
-                    child: const Text("Escolares"),
-                  ),
-                ],
+                  );
+                }).toList(),
               ),
             ),
 
             const SizedBox(height: 16),
 
-            // Lista de productos usando el widget ProductCard
             Expanded(
               child: ListView.builder(
-                itemCount: productos.length,
+                itemCount: productosFiltrados.length, // <-- Aquí le decimos cuántas tarjetas dibujar (ej. 6 tarjetas)
                 itemBuilder: (BuildContext context, int index) {
-                  final producto = productos[index];
-                  return ProductoCard(producto: producto);
+                  
+                  // Sacamos el elemento actual de la lista plana
+                  final item = productosFiltrados[index];
+                  final producto = item['producto'] as Producto;
+                  final colorObj = item['colorObj'] as ProductoColor;
+
+                  // Dibujamos la tarjeta pasándole su producto y su color específico
+                  return ProductoCard(
+                    producto: producto, 
+                    productoColor: colorObj,
+                  );
                 },
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: const CustomNavigationBar(),
     );
   }
 }

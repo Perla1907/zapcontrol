@@ -1,4 +1,4 @@
-import 'package:zapcontrol/data/productos.dart';
+import 'package:zapcontrol/data/productos_data.dart';
 import 'package:zapcontrol/models/ticket.dart';
 
 class Ticketdata {

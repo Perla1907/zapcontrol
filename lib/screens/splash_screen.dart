@@ -1,4 +1,4 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:zapcontrol/core/style_colors.dart';
 import 'package:zapcontrol/screens/productos_screen.dart'; // Asegúrate de que la ruta coincida con tu proyecto
@@ -39,4 +39,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
+}*/

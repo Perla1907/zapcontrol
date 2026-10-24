@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StyleColors {
-  static Color fondo = const Color(0xFFd0d2e3);
+  static Color fondo = Colors.grey.shade100;
   static Color resaltado = Colors.blue;
 
   // Colores específicos para las categorías

@@ -233,7 +233,6 @@ class _TicketVentaState extends State<TicketVenta> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavigationBar(), 
     );
   }
 
