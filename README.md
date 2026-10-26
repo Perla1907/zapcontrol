@@ -9,16 +9,47 @@ emitiendo alertas automáticas de stock bajo.
 Escaneo con Cámara: Utiliza la cámara del teléfono celular para leer códigos de barras y códigos QR,
 facilitando la consulta rápida dce productos y existencias.
 Gestión de Ventas: Agiliza el proceso de venta en tienda física y genera tickets digitales en tiempo real.
+
+ 
+## 2. Los 3 tipos de usuario y sus dashboards
+
 Cuenta con tres usuarios:
 1. Administrador: Tinene acceso a todo el sistema
 2. Gerente: No puede agregar usuarios ni categorías solo puede agregar productos 
 3. Empleado: No puede agregar productos ni usuarios, solo puede hacer ventas
- 
-## 2. Los 3 tipos de usuario y sus dashboards
+
+<br><br>
+
+<table>
+  <thead>
+    <tr>
+      <th align="center">Administrador</th>
+      <th align="center">Gerente</th>
+      <th>Empleado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Acceso a todas las funciones</td>
+      <td>Puede agregar productos</td>
+      <td>No puede agregar productos</td>
+    </tr>
+    <tr>
+      <td><img width="357" height="796" alt="image" src="https://github.com/user-attachments/assets/b303f4c3-4262-4214-8684-69713208f0ab" /></td>
+      <td><img width="357" height="797" alt="image" src="https://github.com/user-attachments/assets/d9860d89-84f6-4977-a3ca-d608a261a7f1" /></td>
+      <td><img width="357" height="800" alt="image" src="https://github.com/user-attachments/assets/01a35ee0-66f1-4ee4-ba13-9502d5cb2c74" /></td>
+    </tr>
+  </tbody>
+</table>
   
 
 ## 3. Manejo de estado elegido (y por qué)
+Para el desarrollo de *ZapControl* en Flutter, se utilizó una estrategia de manejo de estado híbrida: *Provider* (gestión global) y *setState* (gestión local).
 
+#### ¿Por qué se eligió?
+* *Sincronización en tiempo real:* Al registrar una venta, *Provider* actualiza al instante el stock del inventario y las métricas en los tableros del Administrador y Gerente sin necesidad de recargar la app.
+* *Código limpio y mantenible:* Ofrece una arquitectura ligera y fácil de escalar sin añadir complejidad innecesaria al proyecto.
+* *Optimización de recursos:* Se combina con setState para la lógica local e interacciones sencillas de una sola pantalla (validación de campos, filtros de busqueda), garantizando un rendimiento fluido en dispositivos móviles.
 
 
 ## 4. Cómo ejecutar la app
