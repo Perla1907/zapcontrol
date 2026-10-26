@@ -193,11 +193,11 @@ void _mostrarModalPerfil(BuildContext context) {
               onTap: () {
                 Navigator.pop(context);
                 
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PantallaLogin(),
-                  ),
+                    builder: (context) => PantallaLogin()),
+                    (route) => false
                 );
               },
             ),
