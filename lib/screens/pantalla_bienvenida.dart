@@ -42,7 +42,7 @@ class _PantallaBienvenidaState extends State<PantallaBienvenida> {
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.asset(
-                'assets/images/logo.gif',
+                'assets/images/logo.png',
                 width: 120,
                 height: 120,
               ),

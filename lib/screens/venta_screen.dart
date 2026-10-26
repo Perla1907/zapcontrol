@@ -21,15 +21,22 @@ class _VentaScreenState extends State<VentaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 40,
-        titleSpacing: 0,
-        title: const Text('Nueva venta', style: TextStyle(fontWeight: FontWeight.bold)),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context), 
-          icon: const Icon(Icons.arrow_back_ios_outlined),
+        title: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 50,
+                height: 50,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Text('Nueva venta'),
+          ],
         ),
+        titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, color: Colors.black, fontSize: 22),
         actions: [
           IconButton
           (onPressed: () {}, 

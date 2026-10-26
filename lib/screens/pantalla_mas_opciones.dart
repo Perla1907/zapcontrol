@@ -18,16 +18,21 @@ class _PantallaMasOpcionesState extends State<PantallaMasOpciones> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Configuración',
-          style: TextStyle(
-            color: Color(0xFF0F172A),
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+        title: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 50,
+                height: 50,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Text('Configuración'),
+          ],
         ),
+        titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, color: Colors.black, fontSize: 22),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -48,12 +53,12 @@ class _PantallaMasOpcionesState extends State<PantallaMasOpciones> {
               ),
               child: Column(
                 children: [
-                  _buildConfigItem(
+                  /*_buildConfigItem(
                     icon: Icons.person_outlined,
                     title: 'Perfil de usuario',
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(),*/
                   _buildConfigItem(
                     icon: Icons.inventory_2_outlined,
                     title: 'Usuarios',
@@ -66,12 +71,12 @@ class _PantallaMasOpcionesState extends State<PantallaMasOpciones> {
                       );
                     },
                   ),
-                  _buildDivider(),
+                  /*_buildDivider(),
                   _buildConfigItem(
                     icon: Icons.local_offer_outlined,
                     title: 'Sucursales',
                     onTap: () {},
-                  ),
+                  ),*/
                   _buildDivider(),
                   _buildConfigItem(
                     icon: Icons.settings_outlined,

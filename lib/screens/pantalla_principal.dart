@@ -30,44 +30,7 @@ class _PantallaPrincipalZapState extends State<PantallaPrincipalZap> {
     ];
 
     return Scaffold(
-
-      appBar: AppBar(
-        title: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(80),
-              child: Image.asset(
-                'assets/images/logo.gif',
-                width: 50,
-                height: 50,
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Text('ZapControl'),
-          ],
-        ),
-        titleTextStyle: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1,
-          color: Colors.black,
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.account_circle_outlined,
-              color: Colors.indigo,
-              size: 32.0,
-            ),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Perfil proximamente')),
-              );
-            },
-          ),
-        ],
-      ),
-
+      
       body: IndexedStack(index: _indiceActual, children: _paguinas),
 
 

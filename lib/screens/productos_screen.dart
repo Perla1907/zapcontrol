@@ -4,7 +4,6 @@ import 'package:zapcontrol/data/carrito_data.dart';
 import 'package:zapcontrol/data/productos_data.dart';
 import 'package:zapcontrol/models/producto.dart';
 import 'package:zapcontrol/models/producto_color.dart';
-import 'package:zapcontrol/models/usuarios.dart';
 import 'package:zapcontrol/screens/pantalla_nuevo_producto.dart';
 import 'package:zapcontrol/screens/venta_screen.dart';
 import 'package:zapcontrol/services/servicio_auth.dart';
@@ -22,6 +21,7 @@ class ProductosScreen extends StatefulWidget {
 class _ProductosScreenState extends State<ProductosScreen> {
 
   final bool esAdministrador = ServicioAuth.usuarioActual?.rol == "Administrador";
+  final bool esGerente = ServicioAuth.usuarioActual?.rol == "Gerente";
 
   String _categoriaSeleccionada = "Todos";
 
@@ -50,15 +50,23 @@ class _ProductosScreenState extends State<ProductosScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 40,
-        titleSpacing: 0,
-        title: const Text('Productos', style: TextStyle(fontWeight: FontWeight.bold)),
-        leading: IconButton(
-          onPressed: () {}, 
-          icon: const Icon(Icons.arrow_back_ios_outlined),
+        title: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: 50,
+                height: 50,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Text('Productos'),
+          ],
         ),
+        titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, color: Colors.black, fontSize: 22),
         actions: [
-          if (esAdministrador)
+          if (esAdministrador || esGerente)
             IconButton(
               icon: const Icon(Icons.add),
               onPressed: () {

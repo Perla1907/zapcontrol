@@ -63,18 +63,13 @@ class _DetalleProductoScreenState extends State<DetalleProductoScreen> {
         titleSpacing: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductosScreen(),
-              ),
-            );
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_outlined, color: Colors.black87),
         ),
         title: const Text(
           'Detalle del producto',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 22),
         ),
         actions: [
           Stack(

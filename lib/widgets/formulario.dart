@@ -48,8 +48,16 @@ class TarjetaFoto extends StatelessWidget {
 class CampoTexto extends StatelessWidget {
   final String etiqueta;
   final String textoGuia;
+  final TextEditingController? controlador;
+  final TextInputType? teclado;
 
-  const CampoTexto({super.key, required this.etiqueta, required this.textoGuia});
+  const CampoTexto({
+    super.key,
+    required this.etiqueta,
+    required this.textoGuia,
+    this.controlador,
+    this.teclado,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +85,8 @@ class CampoTexto extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                controller: controlador,
+                keyboardType: teclado,
                 style: const TextStyle(fontSize: 17),
                 decoration: InputDecoration(
                   hintText: textoGuia,
@@ -96,12 +106,14 @@ class CampoDesplegable extends StatefulWidget {
   final String etiqueta;
   final String textoGuia;
   final List<String> opciones;
+  final ValueChanged<String?>? alCambiar;
 
   const CampoDesplegable({
     super.key,
     required this.etiqueta,
     required this.textoGuia,
     required this.opciones,
+    this.alCambiar,
   });
 
   @override
@@ -160,6 +172,7 @@ class _CampoDesplegableState extends State<CampoDesplegable> {
                     .toList(),
                 onChanged: (String? nueva) {
                   setState(() => seleccion = nueva);
+                  widget.alCambiar?.call(nueva);
                 },
               ),
             ),

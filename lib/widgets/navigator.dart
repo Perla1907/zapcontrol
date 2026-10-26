@@ -1,9 +1,9 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:zapcontrol/screens/pantalla_de_inicio.dart';
-import 'package:zapcontrol/screens/pantalla_lista_usuario.dart';
 import 'package:zapcontrol/screens/pantalla_mas_opciones.dart';
 import 'package:zapcontrol/screens/productos_screen.dart';
 import 'package:zapcontrol/screens/venta_screen.dart';
+import 'package:zapcontrol/services/servicio_auth.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
@@ -13,55 +13,50 @@ class CustomNavigationBar extends StatefulWidget {
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
-  final List<Widget> _paguinas = [
-    const PantallaInicio(),
-    const ProductosScreen(),
-    const VentaScreen(),
-    const PantallaMasOpciones(),
-    const PantallaListaUsuario(),
-  ];
-  
-  int currentPageIndex = 1;
+  int _indiceActual = 0;
+  final bool esAdministrador = ServicioAuth.usuarioActual?.rol == "Administrador";
   
   @override
   Widget build(BuildContext context) {
+
+    final List<Widget> _paguinas = [
+      const PantallaInicio(),
+      ProductosScreen(),
+      const VentaScreen(),
+      if(esAdministrador) const PantallaMasOpciones(),
+    ];
     
     return NavigationBar(
       onDestinationSelected: (int index) {
         setState(() {
-          currentPageIndex = index;
+          _indiceActual = index;
         });
       },
 
       indicatorColor: Colors.blue.shade100,
-      selectedIndex: currentPageIndex,
+      selectedIndex: _indiceActual,
 
-      destinations: const [
-        NavigationDestination(
+      destinations: [
+        const NavigationDestination(
           selectedIcon: Icon(Icons.home),
           icon: Icon(Icons.home_outlined),
           label: 'Inicio',
         ),
 
-        NavigationDestination(
+        const NavigationDestination(
           selectedIcon: Icon(Icons.inventory_2),
           icon: Icon(Icons.inventory_2_outlined),
           label: 'Productos',
         ),
 
-        NavigationDestination(
+        const NavigationDestination(
           selectedIcon: Icon(Icons.shopping_cart),
           icon: Icon(Icons.shopping_cart_outlined),
           label: 'Ventas',
         ),
 
-        NavigationDestination(
-          selectedIcon: Icon(Icons.warehouse),
-          icon: Icon(Icons.warehouse_outlined),
-          label: 'Inventario',
-        ),
-
-        NavigationDestination(
+        if(esAdministrador) 
+          const NavigationDestination(
           selectedIcon: Icon(Icons.more_horiz),
           icon: Icon(Icons.more_horiz),
           label: 'Más',
@@ -69,4 +64,4 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       ],
     );
   }
-}*/
+}

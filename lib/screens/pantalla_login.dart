@@ -71,7 +71,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(24),
                     child: Image.asset(
-                      'assets/images/logo.gif',
+                      'assets/images/logo.png',
                       width: 90,
                       height: 90,
                     ),
@@ -117,6 +117,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          style: TextStyle(color: Color(0xFFECEDEE)),
                           controller: _passCtrl,
                           obscureText: _ocultarPass,
                           onFieldSubmitted: (value) => _iniciarSesion(),
